@@ -9,7 +9,6 @@ class Birb{
   }
   
   void show(){
-    noStroke();
     image(birdIco, pos.x - 5, pos.y - 5, 30, 30);
   }
   

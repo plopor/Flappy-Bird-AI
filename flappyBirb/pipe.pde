@@ -9,12 +9,8 @@ class pipe{
   }
   
   void show(){
-    noStroke();
     image(pipeTopIco, pos.x, pos.y, 100, top);
     image(pipeIco, pos.x, (top + 150), 100, (700 - (top + 150)));
-    //fill(20, 250, 20);
-    //rect(pos.x, pos.y, 100, top);
-    //rect(pos.x, (top + 150), 100, (700 - (top + 150)));
   }
   
   public void CollisionDetect() {

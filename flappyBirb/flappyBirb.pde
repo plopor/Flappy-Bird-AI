@@ -5,7 +5,7 @@ boolean start = false;
 long lastTime;
 float grav = .5, birbNum = 1;
 ArrayList<pipe> pipes;
-public ArrayList<Birb> birbs;
+ArrayList<Birb> birbs;
 PImage birdIco, pipeIco, pipeTopIco;
 Random rand = new Random();
 
