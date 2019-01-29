@@ -1,7 +1,7 @@
 public class neuron{
   public long[] selfInput;
   public float[] currWeights;
-  public long output;
+  public double output;
   public neuron(long input[], float weights[]){
     selfInput = new long[input.length];
     currWeights = new float[weights.length];
@@ -15,13 +15,14 @@ public class neuron{
     for (int x = 0; x < input.length; x++){
       output += (input[x] * weights[x]);
     }
+    output = 1 / (1 - Math.pow(Math.E, -output));
   }
 }
 
 public class outputNeuron{
   public neuron[] hiddenInput;
   public float[] currWeights;
-  public long output;
+  public double output;
   public outputNeuron(neuron hiddenLayer[], float weights[]){
     hiddenInput = new neuron[hiddenLayer.length];
     currWeights = new float[weights.length];
@@ -35,5 +36,6 @@ public class outputNeuron{
     for (int x = 0; x < hiddenLayer.length; x++){
       output += (hiddenLayer[x].output * weights[x]);
     }
+    output = 1 / (1 - Math.pow(Math.E, - output));
   }
 }

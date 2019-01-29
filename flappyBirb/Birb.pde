@@ -2,6 +2,19 @@ class Birb{
   PVector pos;
   PVector vel;
   boolean dead = false;
+  Random initWeight = new Random();
+  
+  ArrayList<double[]> initWeights (double[] inputs, int numberOfNeurons){
+    ArrayList<double[]> neurons = new ArrayList<double[]>();
+    for (int i = 0; i < numberOfNeurons; i++){
+      double[] weights = new double[numberOfNeurons];
+      for (int j = 0; j < (inputs.length); j++){
+        weights[j] = -1 + (1 + 1) * initWeight.nextDouble();
+      }
+      neurons.add(weights);
+    }
+    return neurons;
+  }
   
   Birb(){
     pos = new PVector(100, 300);
@@ -25,6 +38,10 @@ class Birb{
         die(); 
       }
     }
+  }
+  
+  void think(){
+    
   }
   
   void die(){
