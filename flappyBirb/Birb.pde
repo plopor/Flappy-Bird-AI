@@ -2,9 +2,12 @@ class Birb {
   PVector pos;
   PVector vel;
   boolean dead = false;
+  double timeAlive = 0;
+  double initTime = System.currentTimeMillis();
   Random initWeight = new Random();
   int hiddenNeuronNumber = 10;
-  int firstInputs = 5;
+  int firstInputs = 6;
+  int myIndex = 0;
   double[] initInputs = new double[firstInputs];
   ArrayList<double[]> testWeights = new ArrayList<double[]>();
   ArrayList<double[]> testOutWeights = new ArrayList<double[]>();
@@ -31,7 +34,8 @@ class Birb {
   }
 
   // initialize using this first
-  Birb() {
+  Birb(int index) {
+    myIndex = index;
     pos = new PVector(100, 300);
     vel = new PVector(0, 0);
     initInputs[0] = this.pos.x;
@@ -44,17 +48,31 @@ class Birb {
     image(birdIco, pos.x - 5, pos.y - 5, 30, 30);
   }
 
-  void update(int watchPipe) {
+  public void CollisionDetect(int[] numberDead, int[] parents, int[] parentIndex) {
+    for (pipe j : pipes) {
+      if ((pos.x >= j.pos.x)&&(pos.x <= (j.pos.x + 100))) {
+        if ((pos.y <= (j.pos.y + j.top))||(pos.y >= (j.pos.y + j.top + 150))) {
+          if (!this.dead) {
+            die(numberDead, parents, parentIndex);
+          }
+        }
+      }
+    }
+  }
+
+  void update(int watchPipe, int[] numberDead, int[] parents, int[] parentIndex) {
     pos.y += vel.y;
     pos.x += vel.x;
+    vel.y += grav;
     if (pos.y > 700) {
       pos.y = 680;
     }
-
-    if (start) {
-      vel.y += grav;
-      if (pos.y > 680) {
-        die();
+    if (pos.y < 0) {
+      pos.y = 0;
+    }
+    if (!this.dead) {
+      if (pos.y == 680 || pos.y == 0) {
+        die(numberDead, parents, parentIndex);
       }
     }
     initInputs[0] = pipes.get(watchPipe).pos.x - this.pos.x;
@@ -62,10 +80,11 @@ class Birb {
     initInputs[2] = (700 - (pipes.get(watchPipe).top + 150)) - this.pos.y;
     initInputs[3] = this.pos.x;
     initInputs[4] = this.pos.y;
+    initInputs[5] = this.vel.y;
   }
 
   void think() {
-    if (start) {
+    if (!dead) {
       neuron[] outputLayer = new neuron[hiddenNeuronNumber];
       outputLayer = makeLayer(initInputs, testWeights, hiddenNeuronNumber);
       outputNeuron decision = new outputNeuron(outputLayer, testOutWeights.get(0));
@@ -75,8 +94,19 @@ class Birb {
     }
   }
 
-  void die() {
+  void die(int[] numberDead, int[] parents, int[] parentIndex) {
+    this.timeAlive = System.currentTimeMillis() - initTime;
     this.dead = true;
     this.vel.x = -5;
+    numberDead[0]++;
+    System.out.println("Subject #" + (this.myIndex + 1) + " stayed alive for " + this.timeAlive +". Dead count at " + numberDead[0]);
+    if (numberDead[0] > (birbNum - TOP)) {
+      parents[parentIndex[0]] = this.myIndex;
+      //for (int i = 0; i < TOP; i++) {
+      //  System.out.print(topSurvivors[i] + " ");
+      //}
+      //System.out.println();
+      parentIndex[0]++;
+    }
   }
 }
