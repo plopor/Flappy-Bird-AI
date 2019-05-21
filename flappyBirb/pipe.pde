@@ -1,7 +1,7 @@
 class pipe {
   PVector pos;
   PVector vel;
-  int top = rand.nextInt(500) + 50;
+  int top = rand.nextInt(401) + 50;
 
   pipe() {
     pos = new PVector(1200, 0);
@@ -10,7 +10,7 @@ class pipe {
 
   void show() {
     image(pipeTopIco, pos.x, pos.y, 100, top);
-    image(pipeIco, pos.x, (top + 150), 100, (700 - (top + 150)));
+    image(pipeIco, pos.x, (top + 200), 100, (700 - (top + 200)));
   }
 
   void update() {

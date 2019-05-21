@@ -15,7 +15,7 @@ public class neuron {
     for (int x = 0; x < input.length; x++) {
       output += (input[x] * weights[x]);
     }
-    output = 1 / (1 - Math.pow(Math.E, -output));
+    output = 1 / (1 + Math.pow(Math.E, -output));
   }
 }
 
@@ -36,6 +36,6 @@ public class outputNeuron {
     for (int x = 0; x < hiddenLayer.length; x++) {
       output += (hiddenLayer[x].output * weights[x]);
     }
-    output = 1 / (1 - Math.pow(Math.E, - output));
+    output = 1 / (1 + Math.pow(Math.E, -output));
   }
 }
