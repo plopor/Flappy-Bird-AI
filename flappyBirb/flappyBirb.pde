@@ -276,3 +276,8 @@ void keyPressed() {
     start = true;
   }
 }
+
+// Notes: Fitness is currently defined by time alive
+//        *Try to separate the weights for each neuron in first layer
+//        *Try to reevaluate the way the weights are distributed to children as function of parent fitness
+//        *Try to filter the parent group for more fit individuals
