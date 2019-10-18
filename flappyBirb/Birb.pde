@@ -1,4 +1,5 @@
 class Birb {
+  int firstInputs = 2;
   PVector pos;
   PVector vel;
   boolean dead = false;
@@ -9,6 +10,7 @@ class Birb {
   double[] initInputs = new double[firstInputs];
   ArrayList<double[]> testWeights = new ArrayList<double[]>();
   ArrayList<double[]> testOutWeights = new ArrayList<double[]>();
+  neuron[] outputLayer = new neuron[hiddenNeuronNumber];
 
   ArrayList<double[]> initWeights (int inputNumber, int numberOfNeurons) {
     ArrayList<double[]> allWeights = new ArrayList<double[]>();
@@ -33,10 +35,10 @@ class Birb {
     return layer;
   }
 
-  // initialize using this first
+  // initialize using this constructor
   Birb(int index, boolean gen1) {
     myIndex = index;
-    pos = new PVector(100, 300);
+    pos = new PVector(200, 300);
     vel = new PVector(0, 0);
     if (gen1) {
       testWeights = initWeights (firstInputs, hiddenNeuronNumber);
@@ -48,21 +50,22 @@ class Birb {
     image(birdIco, pos.x - 5, pos.y - 5, 30, 30);
   }
 
-  public void CollisionDetect(int[] parents) {
-    for (pipe j : pipes) {
+  public void CollisionDetect(int[] parents, pipe j) {
+    //for (pipe j : pipes) {
       if ((pos.x >= j.pos.x)&&(pos.x <= (j.pos.x + 100))) {
-        if ((pos.y <= (j.pos.y + j.top))||(pos.y >= (j.pos.y + j.top + 150))) {
+        if ((pos.y <= (j.pos.y + j.top))||(pos.y >= (j.pos.y + j.top + 100))) {
           if (!dead) {
             die(parents);
           }
         }
       }
-    }
+    //}
   }
 
   void update(int watchPipe, int[] parents) {
     initInputs[0] = pipes.get(watchPipe).pos.x - pos.x;
     initInputs[1] = pipes.get(watchPipe).top + 100 - pos.y;
+    //initInputs[2] = pos.x;
     //System.out.println("x diff: " + initInputs[0]);
     //System.out.println("y diff: " + initInputs[1]);
     pos.y += vel.y;
@@ -83,11 +86,11 @@ class Birb {
 
   void think() {
     if (!dead) {
-      neuron[] outputLayer = new neuron[hiddenNeuronNumber];
+      neuron[] outputLayer;
       outputLayer = makeLayer(initInputs, testWeights, hiddenNeuronNumber);
       outputNeuron decision = new outputNeuron(outputLayer, testOutWeights.get(0));
       if (decision.output > 0.5) {
-        vel.y = -10;
+        vel.y = -8;
       }
       //System.out.println("JUMP: " + decision.output);
     }
