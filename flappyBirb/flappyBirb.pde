@@ -7,7 +7,7 @@ float grav = .8;
 ArrayList<Birb> birbs;
 ArrayList<pipe> pipes;
 int hiddenNeuronNumber = 6;
-PImage birdIco, pipeIco, pipeTopIco;
+PImage birdIco, pipeIco, pipeTopIco, bg;
 int numberDead = 0;
 int parentIndex = 0;
 int pipeIndex = 0, pipeAdder = 0;
@@ -19,6 +19,7 @@ double gameTime = System.currentTimeMillis();
 
 
 void setup() {
+  bg = loadImage("bg.png");
   size(1000, 700);
   birbs = new ArrayList<Birb>();
   pipes = new ArrayList<pipe>();
@@ -32,9 +33,9 @@ void setup() {
 }
 
 void draw() {
-  background(0);
+  background(bg);
   if (start) {      
-    if (pipes.get(pipeAdder).pos.x < 680) {
+    if (pipes.get(pipeAdder).pos.x < 500) {
       pipes.add(new pipe());
       pipeAdder++;
     }
