@@ -1,2 +1,2 @@
 # Flappy-Bird-AI
-Made in Java using Processing, a playable version of the popular mobile game Flappy Bird. A neural network that can be trained to play the game perfectly is currently being developed.
+Made in Java using Processing, a playable version of the popular mobile game Flappy Bird. Instantiates and updates hundreds of neural nets simultaneously to apply an evolutionary algorithm to play Flappy Bird autonomously.
